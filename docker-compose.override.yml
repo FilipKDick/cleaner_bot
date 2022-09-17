@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  app:
+    user: "1000"
+    volumes:
+      - ./backend:/app:z
+    ports:
+      - "8001:8000"
+    command: /start-local.sh

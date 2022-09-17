@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: .devops/django/Dockerfile
+    depends_on:
+      - db
+      - redis
+    env_file:
+      - .env
+    command: /start-prod.sh
+
+  db:
+    image: postgres:14
+    volumes:
+      - ./shared/postgresql:/var/lib/postgresql/data:Z
+    env_file:
+      - .env
+
+  redis:
+    image: redis:6
