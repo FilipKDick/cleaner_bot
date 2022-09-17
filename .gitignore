@@ -274,6 +274,7 @@ shared/media/
 .pytest_cache/
 .ipython/
 .env
+.env.prod
 .envs/*
 
 .idea
