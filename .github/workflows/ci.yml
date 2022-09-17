@@ -25,6 +25,9 @@ jobs:
       - name: Checkout Code Repository
         uses: actions/checkout@v3
 
+      - name: Prepare env
+        uses: cp .env.example .env
+
       - name: Build the Stack
         run:  docker-compose build
 
