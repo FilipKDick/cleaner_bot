@@ -278,3 +278,4 @@ shared/media/
 .envs/*
 
 .idea
+*/.tests_reports

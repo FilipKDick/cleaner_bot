@@ -19,7 +19,8 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('api/v1/', include(api_urlpatterns)),  # type: ignore
 ] + static(
-    settings.MEDIA_URL, document_root=settings.MEDIA_ROOT
+    settings.MEDIA_URL,
+    document_root=settings.MEDIA_ROOT,
 )  # type: ignore
 
 if settings.DEBUG:

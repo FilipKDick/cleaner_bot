@@ -5,6 +5,7 @@ services:
     user: "1000"
     volumes:
       - ./backend:/app:z
+      - ./shared/static:/app/static:z
     ports:
       - "8001:8000"
     command: /start-local.sh
