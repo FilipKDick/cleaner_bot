@@ -279,3 +279,4 @@ shared/media/
 
 .idea
 */.tests_reports
+docker-compose.override.yml

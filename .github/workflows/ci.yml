@@ -31,8 +31,8 @@ jobs:
       - name: Build the Stack
         run:  docker-compose build
 
-      - name: Run DB Migrations
+      - name: Run tests
         run:  docker-compose run --rm app make test
 
       - name: Tear down the Stack
-        run:  docker-compose -f local.yml down
+        run:  docker-compose down
