@@ -11,7 +11,9 @@ lint_django:
 	python manage.py check --fail-level=WARNING
 
 unit:
-	pytest --cov=.
+	pytest \
+		--cov=. \
+		--junitxml=/app/.tests_reports/junit.xml
 
 lint_package:
     # TODO: switch to poetry and add
