@@ -27,16 +27,11 @@ RUN pip wheel --wheel-dir /usr/src/app/wheels  \
 FROM python as python-run-stage
 
 ARG APP_HOME=/app
-ARG USER_ID=0
 
 ENV PYTHONUNBUFFERED 1
 ENV PYTHONDONTWRITEBYTECODE 1
-ENV USER_ID=${USER_ID}
 
 WORKDIR ${APP_HOME}
-
-RUN addgroup --system --gid ${USER_ID} django \
-    && adduser --system --uid ${USER_ID} --ingroup django django
 
 # Install required system dependencies
 RUN apt-get update && apt-get install --no-install-recommends -y \
@@ -57,25 +52,35 @@ COPY --from=python-build-stage /usr/src/app/wheels  /wheels/
 RUN pip install --no-cache-dir --no-index --find-links=/wheels/ /wheels/* \
 	&& rm -rf /wheels/
 
-COPY --chown=django:django ./.devops/django/entrypoint.sh /entrypoint.sh
+COPY ./.devops/django/entrypoint.sh /entrypoint.sh
 RUN sed -i 's/\r$//g' /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
-COPY --chown=django:django ./.devops/django/start-local.sh /start-local.sh
+COPY ./.devops/django/start-local.sh /start-local.sh
 RUN sed -i 's/\r$//g' /start-local.sh
 RUN chmod +x /start-local.sh
 
-COPY --chown=django:django ./.devops/django/start-prod.sh /start-prod.sh
+COPY ./.devops/django/start-prod.sh /start-prod.sh
 RUN sed -i 's/\r$//g' /start-prod.sh
 RUN chmod +x /start-prod.sh
 
 
 # copy application code to WORKDIR
-COPY --chown=django:django ./backend ${APP_HOME}
-
-# make django owner of the WORKDIR directory as well.
-RUN chown django:django ${APP_HOME}
-
-USER django
+COPY ./backend ${APP_HOME}
 
 ENTRYPOINT ["/entrypoint.sh"]
+
+FROM python-run-stage as python-run-as-user-stage
+
+ARG USER_ID=0
+ENV USER_ID=${USER_ID}
+
+RUN addgroup --system --gid ${USER_ID} django \
+    && adduser --system --uid ${USER_ID} --ingroup django django \
+
+RUN chown django:django /entrypoint.sh \
+    && chown django:django /start-local.sh \
+    && chown django:django /start-prod.sh \
+    && chown django:django ${APP_HOME}
+
+USER django
