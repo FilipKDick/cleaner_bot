@@ -27,7 +27,7 @@ RUN pip wheel --wheel-dir /usr/src/app/wheels  \
 FROM python as python-run-stage
 
 ARG APP_HOME=/app
-ARG USER_ID=1000
+ARG USER_ID=0
 
 ENV PYTHONUNBUFFERED 1
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -71,7 +71,7 @@ RUN chmod +x /start-prod.sh
 
 
 # copy application code to WORKDIR
-COPY --chown=django:django . ${APP_HOME}
+COPY --chown=django:django ./backend ${APP_HOME}
 
 # make django owner of the WORKDIR directory as well.
 RUN chown django:django ${APP_HOME}
