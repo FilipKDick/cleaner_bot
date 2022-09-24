@@ -31,10 +31,6 @@ jobs:
       - name: Pull old images
         run: docker-compose -f docker-compose.yml -f docker-compose.ci.yml pull
 
-      - name: Use layer caching
-        uses: satackey/action-docker-layer-caching@v0.0.11
-        continue-on-error: true
-
       - name: Build the Stack
         run:  docker-compose -f docker-compose.yml -f docker-compose.ci.yml build
 
@@ -64,10 +60,6 @@ jobs:
 
     - name: Checkout repository
       uses: actions/checkout@v3
-
-    - name: Use layer caching
-      uses: satackey/action-docker-layer-caching@v0.0.11
-      continue-on-error: true
 
     - name: Build Docker image
       run: docker build -f .devops/django/Dockerfile -t $IMAGE_NAME --target python-run-stage .
