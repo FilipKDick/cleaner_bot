@@ -4,9 +4,7 @@ setup:
       as: DATABASE
 build:
   docker:
-    app:
-      dockerfile: .devops/django/Dockerfile
-      context: .
+    app: .devops/django/Dockerfile
 release:
   command:
     - python manage.py migrate
