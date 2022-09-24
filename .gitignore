@@ -270,6 +270,8 @@ tags
 
 ### Project template
 shared/media/
+shared/static/
+shared/postgresql/
 
 .pytest_cache/
 .ipython/
