@@ -76,7 +76,7 @@ ARG USER_ID=0
 ENV USER_ID=${USER_ID}
 
 RUN addgroup --system --gid ${USER_ID} django \
-    && adduser --system --uid ${USER_ID} --ingroup django django \
+    && adduser --system --uid ${USER_ID} --ingroup django django
 
 RUN chown django:django /entrypoint.sh \
     && chown django:django /start-local.sh \
