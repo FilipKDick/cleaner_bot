@@ -28,19 +28,28 @@ class Chore(models.Model):
         return self.name
 
     @property
-    def status(self):
+    def due_soon_date(self) -> datetime.datetime:
         soon_days = int(self.completion_period * 0.7)
+        return self.last_completed_at + datetime.timedelta(days=soon_days)
+
+    @property
+    def due_date(self) -> datetime.datetime:
         due_days = self.completion_period
+        return self.last_completed_at + datetime.timedelta(days=due_days)
+
+    @property
+    def overdue_date(self) -> datetime.datetime:
         overdue_days = 2 * self.completion_period
-        soon_date = self.last_completed_at + datetime.timedelta(days=soon_days)
-        due_date = self.last_completed_at + datetime.timedelta(days=due_days)
-        overdue_date = self.last_completed_at + datetime.timedelta(days=overdue_days)
+        return self.last_completed_at + datetime.timedelta(days=overdue_days)
+
+    @property
+    def status(self) -> str:
         now = timezone.now()
-        if now < soon_date:
+        if now < self.due_soon_date:
             return ChoreCompletionStatus.SAFE.value
-        if now < due_date:
+        if now < self.due_date:
             return ChoreCompletionStatus.SOON.value
-        if now < overdue_date:
+        if now < self.overdue_date:
             return ChoreCompletionStatus.DUE.value
         return ChoreCompletionStatus.OVERDUE.value
 
