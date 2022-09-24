@@ -282,3 +282,5 @@ shared/postgresql/
 .idea
 */.tests_reports
 docker-compose.override.yml
+
+key.json
