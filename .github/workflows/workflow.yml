@@ -65,6 +65,9 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
+    - name: Fill env
+      run: envsubst < .env.prod.template > .env.prod
+
     - name: Use layer caching
       uses: satackey/action-docker-layer-caching@v0.0.11
       continue-on-error: true
@@ -76,4 +79,9 @@ jobs:
       run: docker push $IMAGE_NAME
 
     - name: Deploy Docker image
-      run: gcloud run deploy ${{ secrets.GCP_PROJECT_ID }} --image $IMAGE_NAME --region europe-central2 --platform managed
+      run: |
+        gcloud run deploy ${{ secrets.GCP_PROJECT_ID }} \
+        --image $IMAGE_NAME \
+        --env-vars-file .env.prod \
+        --region europe-central2 \
+        --platform managed
