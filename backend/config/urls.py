@@ -12,6 +12,7 @@ api_urlpatterns = [
     # DRF auth token
     path('auth-token/', obtain_auth_token),
     path('users/', include('apps.users.api.urls', namespace='users')),
+    path('chores/', include('apps.chores.urls', namespace='chores')),
 ]
 
 urlpatterns = [
