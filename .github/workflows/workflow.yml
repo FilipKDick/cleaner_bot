@@ -76,6 +76,6 @@ jobs:
         --update-secrets="POSTGRES_HOST=POSTGRES_HOST:2" \
         --update-secrets="POSTGRES_PASSWORD=POSTGRES_PASSWORD:1" \
         --env-vars-file .env.prod.template \
-        --add-cloudsql-instances=quickstart-instance \
+        --add-cloudsql-instances=cleaner-bot:us-central1:quickstart-instance \
         --region europe-central2 \
         --platform managed
