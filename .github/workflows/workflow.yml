@@ -78,4 +78,5 @@ jobs:
         --env-vars-file .env.prod.template \
         --add-cloudsql-instances=cleaner-bot:us-central1:quickstart-instance \
         --region europe-central2 \
+        --port 8000 \
         --platform managed
