@@ -73,7 +73,7 @@ jobs:
         --image $IMAGE_NAME \
         --update-secrets="DJANGO_SECRET_KEY=DJANGO_SECRET_KEY:1" \
         --update-secrets="DJANGO_ADMIN_URL=DJANGO_ADMIN_URL:1" \
-        --update-secrets="POSTGRES_HOST=POSTGRES_HOST:1" \
+        --update-secrets="POSTGRES_HOST=POSTGRES_HOST:2" \
         --update-secrets="POSTGRES_PASSWORD=POSTGRES_PASSWORD:1" \
         --env-vars-file .env.prod.template \
         --add-cloudsql-instances=quickstart-instance \
