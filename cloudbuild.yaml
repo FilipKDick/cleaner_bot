@@ -3,7 +3,7 @@ steps:
     args:
     - 'build'
     - '--tag=$_GCR_HOSTNAME/$PROJECT_ID/$_REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA'
-    - '--file=./devops/django/Dockerfile'
+    - '--file=./.devops/django/Dockerfile'
     - '--target=python-run-stage'
     - '.'
   - name: 'gcr.io/cloud-builders/docker'
