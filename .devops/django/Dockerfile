@@ -69,6 +69,7 @@ RUN chmod +x /start-prod.sh
 COPY ./backend ${APP_HOME}
 
 ENTRYPOINT ["/entrypoint.sh"]
+CMD /start-prod.sh
 
 FROM python-run-stage as python-run-as-user-stage
 
