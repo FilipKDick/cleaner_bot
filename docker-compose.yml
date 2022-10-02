@@ -1,6 +1,13 @@
-version: '3'
+version: '3.9'
 
 services:
+  db:
+    image: postgres:14
+    volumes:
+      - ./shared/postgresql:/var/lib/postgresql/data:Z
+    env_file:
+      - ./backend/.env
+
   app:
     build:
       context: .
@@ -9,15 +16,17 @@ services:
       - db
       - redis
     env_file:
-      - .env
-    command: /start-prod.sh
+      - ./backend/.env
 
-  db:
-    image: postgres:14
-    volumes:
-      - ./shared/postgresql:/var/lib/postgresql/data:Z
+  web:
+    build:
+      context: .
+      dockerfile: ./.devops/frontend/Dockerfile
+      target: develop-stage
+    environment:
+      NODE_ENV: development
     env_file:
-      - .env
+      - ./frontend/.env
 
   redis:
     image: redis:6
