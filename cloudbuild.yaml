@@ -5,6 +5,7 @@ steps:
     - '--tag=$_GCR_HOSTNAME/$PROJECT_ID/$_REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA'
     - '--file=./.devops/django/Dockerfile'
     - '--target=python-run-stage'
+    - '--build-arg BUILD_ENVIRONMENT=production'
     - '.'
   - name: 'gcr.io/cloud-builders/docker'
     args:
