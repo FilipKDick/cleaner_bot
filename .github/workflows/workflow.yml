@@ -39,45 +39,44 @@ jobs:
 
       - name: Tear down the Stack
         run:  docker-compose -f docker-compose.yml -f docker-compose.ci.yml down
-
-  deploy:
-    needs: test
-    name: Setup Gcloud Account
-    runs-on: ubuntu-latest
-    env:
-      IMAGE_NAME: gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_APP_NAME }}
-    steps:
-
-    - name: Login
-      uses: google-github-actions/setup-gcloud@v0
-      with:
-        project_id: ${{ secrets.GCP_PROJECT_ID }}
-        service_account_email: ${{ secrets.GCP_EMAIL }}
-        service_account_key: ${{ secrets.GCP_CREDENTIALS }}
-
-    - name: Configure Docker
-      run: gcloud auth configure-docker --quiet
-
-    - name: Checkout repository
-      uses: actions/checkout@v3
-
-    - name: Build Docker image
-      run: docker build -f .devops/django/Dockerfile -t $IMAGE_NAME --target python-run-stage .
-
-    - name: Push Docker image
-      run: docker push $IMAGE_NAME
-
-    - name: Deploy Docker image
-      run: |
-        gcloud run deploy ${{ secrets.GCP_PROJECT_ID }} \
-        --image $IMAGE_NAME \
-        --update-secrets="DJANGO_SECRET_KEY=DJANGO_SECRET_KEY:1" \
-        --update-secrets="DJANGO_ADMIN_URL=DJANGO_ADMIN_URL:1" \
-        --update-secrets="POSTGRES_HOST=POSTGRES_HOST:2" \
-        --update-secrets="POSTGRES_PASSWORD=POSTGRES_PASSWORD:1" \
-        --env-vars-file .env.prod.template \
-        --add-cloudsql-instances=cleaner-bot:us-central1:quickstart-instance \
-        --region europe-central2 \
-        --port 8000 \
-        --platform managed \
-        --log-driver=gcplogs
+#
+#  deploy:
+#    needs: test
+#    name: Setup Gcloud Account
+#    runs-on: ubuntu-latest
+#    env:
+#      IMAGE_NAME: gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_APP_NAME }}
+#    steps:
+#
+#    - name: Login
+#      uses: google-github-actions/setup-gcloud@v0
+#      with:
+#        project_id: ${{ secrets.GCP_PROJECT_ID }}
+#        service_account_email: ${{ secrets.GCP_EMAIL }}
+#        service_account_key: ${{ secrets.GCP_CREDENTIALS }}
+#
+#    - name: Configure Docker
+#      run: gcloud auth configure-docker --quiet
+#
+#    - name: Checkout repository
+#      uses: actions/checkout@v3
+#
+#    - name: Build Docker image
+#      run: docker build -f .devops/django/Dockerfile -t $IMAGE_NAME --target python-run-stage .
+#
+#    - name: Push Docker image
+#      run: docker push $IMAGE_NAME
+#
+#    - name: Deploy Docker image
+#      run: |
+#        gcloud run deploy ${{ secrets.GCP_PROJECT_ID }} \
+#        --image $IMAGE_NAME \
+#        --update-secrets="DJANGO_SECRET_KEY=DJANGO_SECRET_KEY:1" \
+#        --update-secrets="DJANGO_ADMIN_URL=DJANGO_ADMIN_URL:1" \
+#        --update-secrets="POSTGRES_HOST=POSTGRES_HOST:2" \
+#        --update-secrets="POSTGRES_PASSWORD=POSTGRES_PASSWORD:1" \
+#        --env-vars-file .env.prod.template \
+#        --add-cloudsql-instances=cleaner-bot:us-central1:quickstart-instance \
+#        --region europe-central2 \
+#        --port 8000 \
+#        --platform managed
