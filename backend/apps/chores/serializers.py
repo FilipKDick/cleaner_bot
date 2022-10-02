@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from rest_framework.exceptions import ValidationError
 
 from .models import (
     Chore,
@@ -8,9 +9,25 @@ from .models import (
 
 
 class ChoreSerializer(serializers.ModelSerializer):
+    group_id = serializers.UUIDField()
+
     class Meta:
         model = Chore
-        fields = ['id', 'name', 'status']
+        fields = [
+            'id',
+            'name',
+            'status',
+            'completion_period',
+            'last_completed_at',
+            'group_id',
+        ]
+
+    def validate_group_id(self, group_id):
+        try:
+            ChoreGroup.objects.get(id=group_id)
+        except ChoreGroup.DoesNotExist:
+            raise ValidationError(f'Chore group {group_id} does not exist')
+        return group_id
 
 
 class ChoreGroupSerializer(serializers.ModelSerializer):

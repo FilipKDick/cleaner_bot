@@ -58,11 +58,6 @@ class ChoreGroup(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     owner = models.ForeignKey(User, on_delete=models.PROTECT)
     name = models.CharField(max_length=128)
-    page = models.ForeignKey(
-        'chores.ChorePage',
-        on_delete=models.CASCADE,
-        related_name='groups',
-    )
 
     def __str__(self) -> str:
         return self.name
@@ -73,6 +68,7 @@ class ChorePage(models.Model):
     owner = models.ForeignKey(User, on_delete=models.PROTECT)
     # TODO: default name
     name = models.CharField(max_length=128)
+    groups = models.ManyToManyField('chores.ChoreGroup', related_name='pages')
 
     def __str__(self) -> str:
         return self.name
