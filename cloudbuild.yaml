@@ -30,18 +30,6 @@ images:
   - '$_GCR_HOSTNAME/$PROJECT_ID/$_REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA'
 options:
   substitutionOption: ALLOW_LOOSE
-availableSecrets:
-  secretManager:
-    - versionName: projects/933083948736/secrets/DJANGO_ALLOWED_HOSTS/versions/1
-      env: DJANGO_ALLOWED_HOSTS
-    - versionName: projects/933083948736/secrets/DJANGO_ADMIN_URL/versions/1
-      env: DJANGO_ADMIN_URL
-    - versionName: projects/933083948736/secrets/DJANGO_SECRET_KEY/versions/1
-      env: DJANGO_SECRET_KEY
-    - versionName: projects/933083948736/secrets/POSTGRES_HOST/versions/2
-      env: POSTGRES_HOST
-    - versionName: projects/933083948736/secrets/POSTGRES_PASSWORD/versions/1
-      env: POSTGRES_PASSWORD
 substitutions:
   _ENTRYPOINT: .devops/django/Dockerfile
   _DEPLOY_REGION: europe-central2
