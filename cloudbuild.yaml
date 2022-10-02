@@ -5,7 +5,8 @@ steps:
     - '--tag=$_GCR_HOSTNAME/$PROJECT_ID/$_REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA'
     - '--file=./.devops/django/Dockerfile'
     - '--target=python-run-stage'
-    - '--build-arg="BUILD_ENVIRONMENT=production"'
+    - '--build-arg'
+    - BUILD_ENVIRONMENT=$_BUILD_ENVIRONMENT
     - '.'
   - name: 'gcr.io/cloud-builders/docker'
     args:
@@ -38,6 +39,7 @@ substitutions:
   _LABELS: gcb-trigger-id=a782f5de-3833-440f-94bf-05b6f6580107
   _TRIGGER_ID: a782f5de-3833-440f-94bf-05b6f6580107
   _REPO_NAME: app
+  _BUILD_ENVIRONMENT: production
 tags:
   - gcp-cloud-build-deploy-cloud-run
   - gcp-cloud-build-deploy-cloud-run-managed
