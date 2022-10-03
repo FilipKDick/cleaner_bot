@@ -28,11 +28,8 @@ jobs:
       - name: Copy env
         run: cp backend/.env.example backend/.env
 
-      - name: Pull old images
-        run: docker-compose -f docker-compose.yml -f docker-compose.ci.yml pull
-
       - name: Build the Stack
-        run:  docker-compose -f docker-compose.yml -f docker-compose.ci.yml build
+        run:  docker-compose -f docker-compose.yml -f docker-compose.ci.yml build app
 
       - name: Run tests
         run:  docker-compose -f docker-compose.yml -f docker-compose.ci.yml run --rm app make test
