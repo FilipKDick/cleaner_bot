@@ -19,7 +19,7 @@ class Chore(models.Model):
         on_delete=models.CASCADE,
         related_name='chores',
     )
-    completion_period = models.IntegerField(
+    completion_frequency = models.IntegerField(
         help_text='How often (days) should it be done',
     )
     last_completed_at = models.DateTimeField()
@@ -29,17 +29,17 @@ class Chore(models.Model):
 
     @property
     def due_soon_date(self) -> datetime.datetime:
-        soon_days = int(self.completion_period * 0.7)
+        soon_days = int(self.completion_frequency * 0.7)
         return self.last_completed_at + datetime.timedelta(days=soon_days)
 
     @property
     def due_date(self) -> datetime.datetime:
-        due_days = self.completion_period
+        due_days = self.completion_frequency
         return self.last_completed_at + datetime.timedelta(days=due_days)
 
     @property
     def overdue_date(self) -> datetime.datetime:
-        overdue_days = 2 * self.completion_period
+        overdue_days = 2 * self.completion_frequency
         return self.last_completed_at + datetime.timedelta(days=overdue_days)
 
     @property
@@ -61,6 +61,16 @@ class ChoreGroup(models.Model):
 
     def __str__(self) -> str:
         return self.name
+
+    def status(self):
+        chores = self.chores.all()
+        if any(chore.status == ChoreCompletionStatus.OVERDUE.value for chore in chores):
+            return ChoreCompletionStatus.OVERDUE.value
+        if any(chore.status == ChoreCompletionStatus.DUE.value for chore in chores):
+            return ChoreCompletionStatus.DUE.value
+        if any(chore.status == ChoreCompletionStatus.SOON.value for chore in chores):
+            return ChoreCompletionStatus.SOON.value
+        return ChoreCompletionStatus.SAFE.value
 
 
 class ChorePage(models.Model):

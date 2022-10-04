@@ -10,6 +10,12 @@ from .models import (
 
 class ChoreSerializer(serializers.ModelSerializer):
     group_id = serializers.UUIDField()
+    last_completed_at = serializers.DateTimeField(
+        format='%Y/%m/%d', input_formats=['%Y-%m-%dT%H:%M:%S', '%Y/%m/%d']
+    )
+    due_date = serializers.DateTimeField(
+        format='%Y/%m/%d', input_formats=['%Y-%m-%dT%H:%M:%S', '%Y/%m/%d']
+    )
 
     class Meta:
         model = Chore
@@ -17,9 +23,10 @@ class ChoreSerializer(serializers.ModelSerializer):
             'id',
             'name',
             'status',
-            'completion_period',
+            'completion_frequency',
             'last_completed_at',
             'group_id',
+            'due_date',
         ]
 
     def validate_group_id(self, group_id):
@@ -35,7 +42,7 @@ class ChoreGroupSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ChoreGroup
-        fields = ['id', 'name', 'chores']
+        fields = ['id', 'name', 'chores', 'status']
 
 
 class ChorePageSerializer(serializers.ModelSerializer):

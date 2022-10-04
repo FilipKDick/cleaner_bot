@@ -39,10 +39,14 @@ import SidebarLink from 'components/SidebarLink.vue'
 
 const linksList = [
   {
+    title: 'See all chores',
+    icon: 'assignment',
+    link: 'allChores'
+  },
+  {
     title: 'Add a new chore',
     icon: 'add_task',
-    // TODO:
-    link: 'https://example.com'
+    link: 'addPage'
   },
   {
     title: 'Add a new chore group',

@@ -26,6 +26,9 @@
       "stores/*": [
         "src/stores/*"
       ],
+      "helpers/*": [
+        "src/helpers/*"
+      ],
       "vue$": [
         "node_modules/vue/dist/vue.runtime.esm-bundler.js"
       ]

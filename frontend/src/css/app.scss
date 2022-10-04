@@ -1,1 +1,31 @@
 // app global css in SCSS form
+.chore-safe {
+  background-color: #006b3e;
+}
+
+.chore-safe:hover {
+  background-color: #7ABD7E;
+}
+
+.chore-soon {
+  background-color: #ffe733;
+}
+
+.chore-soon:hover {
+  background-color: #F8D66D;
+}
+
+.chore-due {
+  background-color: #ff8c01;
+}
+
+.chore-due:hover {
+  background-color: #FFB54C;
+}
+
+.chore-overdue {
+  background-color: #ED2938;
+}
+.chore-overdue:hover {
+  background-color: #FF6961;
+}

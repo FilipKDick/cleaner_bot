@@ -1,12 +1,17 @@
-from rest_framework.generics import CreateAPIView
+from rest_framework.generics import (
+    CreateAPIView,
+    ListAPIView,
+)
 from rest_framework.mixins import RetrieveModelMixin
 from rest_framework.viewsets import GenericViewSet
 
 from .models import (
     Chore,
+    ChoreGroup,
     ChorePage,
 )
 from .serializers import (
+    ChoreGroupSerializer,
     ChorePageSerializer,
     ChoreSerializer,
 )
@@ -27,3 +32,8 @@ class CreateChoreView(CreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+
+
+class ChoreGroupListView(ListAPIView):
+    queryset = ChoreGroup.objects.all()
+    serializer_class = ChoreGroupSerializer
