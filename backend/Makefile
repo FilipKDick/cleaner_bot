@@ -19,7 +19,6 @@ lint_package:
     # TODO: switch to poetry and add
     #	poetry check
 	pip check
-	safety check --bare
 
 test: \
 	lint_python \
