@@ -10,6 +10,15 @@ from apps.chores.enums import ChoreCompletionStatus
 User = get_user_model()
 
 
+class ChoreHistory(models.Model):
+    chore = models.ForeignKey(
+        'chores.Chore',
+        on_delete=models.CASCADE,
+        related_name='history',
+    )
+    finished_at = models.DateTimeField(auto_now_add=True)
+
+
 class Chore(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     owner = models.ForeignKey(User, on_delete=models.PROTECT)
@@ -26,6 +35,11 @@ class Chore(models.Model):
 
     def __str__(self) -> str:
         return self.name
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        if 'last_completed_at' in kwargs.get('update_fields', []):
+            ChoreHistory.objects.create(chore=self)
 
     @property
     def due_soon_date(self) -> datetime.datetime:
@@ -52,6 +66,10 @@ class Chore(models.Model):
         if now < self.overdue_date:
             return ChoreCompletionStatus.DUE.value
         return ChoreCompletionStatus.OVERDUE.value
+
+    def mark_done(self):
+        self.last_completed_at = timezone.now()
+        self.save(update_fields=['last_completed_at'])
 
 
 class ChoreGroup(models.Model):

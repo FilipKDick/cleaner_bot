@@ -8,14 +8,17 @@ from .models import (
 )
 
 
+class ChoreDateField(serializers.DateTimeField):
+    def __init__(self, default_timezone=None, **kwargs):
+        date_format = '%Y/%m/%d'
+        input_formats = ['%Y/%m/%dT%H:%M:%S', date_format]
+        super().__init__(date_format, input_formats, default_timezone, **kwargs)
+
+
 class ChoreSerializer(serializers.ModelSerializer):
     group_id = serializers.UUIDField()
-    last_completed_at = serializers.DateTimeField(
-        format='%Y/%m/%d', input_formats=['%Y-%m-%dT%H:%M:%S', '%Y/%m/%d']
-    )
-    due_date = serializers.DateTimeField(
-        format='%Y/%m/%d', input_formats=['%Y-%m-%dT%H:%M:%S', '%Y/%m/%d']
-    )
+    last_completed_at = ChoreDateField()
+    due_date = ChoreDateField()
 
     class Meta:
         model = Chore

@@ -13,7 +13,7 @@
         <q-card>
             <div class="q-pa-md">
               <div class="q-gutter-x-md q-gutter-y-lg">
-                <ChoreCard :chore="chore" v-for="chore in group.chores" :key="chore.id" />
+                <ChoreCard :chore="chore" @chore-updated="refreshGroups" v-for="chore in group.chores" :key="chore.id" />
               </div>
             </div>
         </q-card>
@@ -26,9 +26,11 @@
 import { getAllGroups } from 'helpers/api'
 import ChoreCard from 'components/ChoreCard'
 
-const availableGroups = getAllGroups()
-
-// TODO add default-opened jeśli status jest na czerwono
-// TODO: ordering po statusie
+let availableGroups = getAllGroups()
+function refreshGroups () {
+  availableGroups = getAllGroups()
+}
+// TODO add default-opened if its overdue
+// TODO: ordering by status
 
 </script>

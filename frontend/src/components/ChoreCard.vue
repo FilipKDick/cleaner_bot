@@ -2,7 +2,7 @@
   <q-btn
     class="chore"
     @click="setDone()"
-    :class="`chore-${chore.status}`"
+    :class="`chore-${choreStatus}`"
   >
     {{ chore.name }} <br><br>
     {{ choreComment() }}
@@ -11,16 +11,30 @@
 
 <script setup>
 import { defineProps, ref } from 'vue'
+import { useQuasar } from 'quasar'
 import { api } from 'boot/axios'
 
 const props = defineProps(['chore'])
 const chore = ref(props.chore)
+const choreStatus = ref(chore.value.status)
+
+const $q = useQuasar()
 
 function setDone () {
   api.post(
-    'chores/',
-    {}
+    'chores/mark_done/',
+    { chore_id: chore.value.id }
   )
+    .then(
+      choreStatus.value = 'safe'
+    )
+    .catch((error) => {
+      const errorMessages = Object.values(error.response.data).join(',')
+      $q.notify(
+        { message: `Could not mark as done: ${errorMessages}` }
+      )
+    })
+  // TODO: refresh page
 }
 
 function choreComment () {
