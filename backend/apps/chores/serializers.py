@@ -18,7 +18,7 @@ class ChoreDateField(serializers.DateTimeField):
 class ChoreSerializer(serializers.ModelSerializer):
     group_id = serializers.UUIDField()
     last_completed_at = ChoreDateField()
-    due_date = ChoreDateField()
+    due_date = ChoreDateField(read_only=True)
 
     class Meta:
         model = Chore
@@ -35,8 +35,8 @@ class ChoreSerializer(serializers.ModelSerializer):
     def validate_group_id(self, group_id):
         try:
             ChoreGroup.objects.get(id=group_id)
-        except ChoreGroup.DoesNotExist:
-            raise ValidationError(f'Chore group {group_id} does not exist')
+        except ChoreGroup.DoesNotExist as e:
+            raise ValidationError(f'Chore group {group_id} does not exist') from e
         return group_id
 
 

@@ -60,7 +60,7 @@
       </q-card-section>
 
       <q-card-actions align="right">
-        <q-btn flat label="See it in group" color="primary" v-close-popup @click="todo"/>
+        <q-btn flat label="See it in group" color="primary" v-close-popup :to="{name: 'allChores' }"/>
         <q-btn flat label="Add another one" color="primary" v-close-popup @click="todo"/>
       </q-card-actions>
     </q-card>
@@ -83,7 +83,12 @@ const formState = reactive({
 })
 
 const choreAdded = ref(false)
-const availableGroups = getAllGroups()
+const availableGroups = ref()
+
+getAllGroups().then((data) => {
+  console.log(data)
+  availableGroups.value = data
+})
 
 function submitForm () {
   console.log('formState', formState)

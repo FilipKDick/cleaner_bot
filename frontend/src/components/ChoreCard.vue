@@ -10,11 +10,12 @@
 </template>
 
 <script setup>
-import { defineProps, ref } from 'vue'
+import { defineEmits, defineProps, ref } from 'vue'
 import { useQuasar } from 'quasar'
 import { api } from 'boot/axios'
 
 const props = defineProps(['chore'])
+const emit = defineEmits(['choreUpdated'])
 const chore = ref(props.chore)
 const choreStatus = ref(chore.value.status)
 
@@ -25,8 +26,11 @@ function setDone () {
     'chores/mark_done/',
     { chore_id: chore.value.id }
   )
-    .then(
+    .then((resp) => {
       choreStatus.value = 'safe'
+      chore.value = resp.data
+      emit('choreUpdated')
+    }
     )
     .catch((error) => {
       const errorMessages = Object.values(error.response.data).join(',')
@@ -38,7 +42,7 @@ function setDone () {
 }
 
 function choreComment () {
-  if ((chore.value.status === 'safe') | (chore.value.status === 'soon')) {
+  if ((chore.value.status === 'safe') || (chore.value.status === 'soon')) {
     return `Should be done at ${chore.value.due_date}`
   }
   return `Should've been done before ${chore.value.due_date}`

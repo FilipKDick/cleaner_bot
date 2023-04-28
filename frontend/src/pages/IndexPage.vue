@@ -13,7 +13,12 @@
         <q-card>
             <div class="q-pa-md">
               <div class="q-gutter-x-md q-gutter-y-lg">
-                <ChoreCard :chore="chore" @chore-updated="refreshGroups" v-for="chore in group.chores" :key="chore.id" />
+                <ChoreCard
+                  :chore="chore"
+                  @chore-updated="refreshGroups"
+                  v-for="chore in group.chores"
+                  :key="chore.id"
+                />
               </div>
             </div>
         </q-card>
@@ -23,12 +28,29 @@
 </template>
 
 <script setup>
+import { ref } from 'vue'
+import { useQuasar } from 'quasar'
 import { getAllGroups } from 'helpers/api'
 import ChoreCard from 'components/ChoreCard'
 
-let availableGroups = getAllGroups()
+const $q = useQuasar()
+
+const availableGroups = ref(null)
+refreshGroups()
+
 function refreshGroups () {
-  availableGroups = getAllGroups()
+  getAllGroups()
+    .then(
+      (data) => {
+        availableGroups.value = data
+      }
+    )
+    .catch((error) => {
+      const errorMessages = Object.values(error).join(',')
+      $q.notify(
+        { message: `Could not fetch available groups: ${errorMessages}` }
+      )
+    })
 }
 // TODO add default-opened if its overdue
 // TODO: ordering by status
