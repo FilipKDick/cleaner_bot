@@ -35,8 +35,8 @@ class ChoreSerializer(serializers.ModelSerializer):
     def validate_group_id(self, group_id):
         try:
             ChoreGroup.objects.get(id=group_id)
-        except ChoreGroup.DoesNotExist as e:
-            raise ValidationError(f'Chore group {group_id} does not exist') from e
+        except ChoreGroup.DoesNotExist as exc:
+            raise ValidationError(f'Chore group {group_id} does not exist') from exc
         return group_id
 
 
