@@ -41,7 +41,7 @@ class ChoreSerializer(serializers.ModelSerializer):
 
 
 class ChoreGroupSerializer(serializers.ModelSerializer):
-    chores = ChoreSerializer(many=True)
+    chores = ChoreSerializer(many=True, read_only=True)
 
     class Meta:
         model = ChoreGroup

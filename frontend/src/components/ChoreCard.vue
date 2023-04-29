@@ -38,7 +38,6 @@ function setDone () {
         { message: `Could not mark as done: ${errorMessages}` }
       )
     })
-  // TODO: refresh page
 }
 
 function choreComment () {

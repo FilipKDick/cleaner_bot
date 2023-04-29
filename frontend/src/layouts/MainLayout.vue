@@ -51,8 +51,7 @@ const linksList = [
   {
     title: 'Add a new chore group',
     icon: 'add_circle_outline',
-    // TODO:
-    link: 'https://example.com'
+    link: 'addGroup'
   }
 ]
 

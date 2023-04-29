@@ -18,7 +18,7 @@
             bottom-slots
           >
           <template v-slot:hint>
-            <div>Your group not there? You can <a href=https://example.com>Add a new group</a></div>
+            <div>Your group not there? You can <router-link :to="{name: 'addGroup'}">Add a new group</router-link></div>
           </template>
           </q-select>
           <q-input
@@ -113,14 +113,3 @@ function clearForm () {
   Object.assign(formState, emptyForm)
 }
 </script>
-
-<style lang="scss">
-.create-account-card {
-  width: 512px;
-}
-
-.password-criteria {
-  background-color: #efefef;
-  border-radius: 0.5rem;
-}
-</style>

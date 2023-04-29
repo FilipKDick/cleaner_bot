@@ -42,7 +42,7 @@ function refreshGroups () {
   getAllGroups()
     .then(
       (data) => {
-        availableGroups.value = data
+        availableGroups.value = data.filter((group) => group.chores.length > 0)
       }
     )
     .catch((error) => {
@@ -52,6 +52,7 @@ function refreshGroups () {
       )
     })
 }
+
 // TODO add default-opened if its overdue
 // TODO: ordering by status
 
