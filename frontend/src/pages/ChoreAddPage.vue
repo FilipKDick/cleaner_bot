@@ -61,7 +61,7 @@
 
       <q-card-actions align="right">
         <q-btn flat label="See it in group" color="primary" v-close-popup :to="{name: 'allChores' }"/>
-        <q-btn flat label="Add another one" color="primary" v-close-popup @click="todo"/>
+        <q-btn flat label="Add another one" color="primary" v-close-popup @click="clearForm"/>
       </q-card-actions>
     </q-card>
   </q-dialog>
@@ -75,23 +75,23 @@ import { getAllGroups } from 'helpers/api'
 
 const $q = useQuasar()
 
-const formState = reactive({
+const emptyForm = {
   name: '',
   group: '',
   frequency: '',
   lastCompletedAt: ''
-})
+}
+
+const formState = reactive({ ...emptyForm })
 
 const choreAdded = ref(false)
 const availableGroups = ref()
 
 getAllGroups().then((data) => {
-  console.log(data)
   availableGroups.value = data
 })
 
 function submitForm () {
-  console.log('formState', formState)
   api.post(
     'chores/create/',
     {
@@ -109,9 +109,8 @@ function submitForm () {
     })
 }
 
-function todo () {
-  // TODO: fill this function
-  console.log('https://example.com')
+function clearForm () {
+  Object.assign(formState, emptyForm)
 }
 </script>
 

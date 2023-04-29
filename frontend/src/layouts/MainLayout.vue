@@ -46,7 +46,7 @@ const linksList = [
   {
     title: 'Add a new chore',
     icon: 'add_task',
-    link: 'addPage'
+    link: 'addChore'
   },
   {
     title: 'Add a new chore group',
