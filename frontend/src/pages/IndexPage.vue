@@ -6,6 +6,7 @@
         v-for="group in availableGroups"
         :key="group.label"
         :class="`chore-${group.status}`"
+        class="rounded-borders q-ma-sm"
       >
         <template v-slot:header>
           <q-item-section class="row items-center">{{ group.label }}</q-item-section>

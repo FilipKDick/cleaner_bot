@@ -12,6 +12,8 @@ services:
     build:
       context: .
       dockerfile: .devops/django/Dockerfile
+      args:
+        USER_ID: "1000"
     depends_on:
       - db
       - redis
