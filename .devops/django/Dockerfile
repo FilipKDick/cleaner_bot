@@ -24,8 +24,8 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
 COPY ./backend/pyproject.toml ./backend/poetry.lock* ${APP_HOME}/
 
 RUN pip install --upgrade pip \
-    && pip install --no-cache-dir poetry \
-    && poetry config virtualenvs.create false
+    && pip install --no-cache-dir poetry
+RUN poetry config virtualenvs.create false
 RUN poetry install
 
 COPY ./.devops/django/entrypoint.sh /entrypoint.sh
@@ -53,7 +53,7 @@ ARG USER_ID=0
 ENV USER_ID=${USER_ID}
 
 RUN addgroup --system --gid ${USER_ID} django \
-    && adduser --system --uid ${USER_ID} --ingroup django django
+    && adduser --system --home /home/django --uid ${USER_ID} --ingroup django django
 
 RUN chown django:django /entrypoint.sh \
     && chown django:django /start-local.sh \
