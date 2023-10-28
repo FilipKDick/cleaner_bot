@@ -14,7 +14,7 @@
         </template>
         <q-card>
             <div class="q-pa-md">
-              <div class="q-gutter-x-md q-gutter-y-lg">
+              <div class="q-gutter-x-xl q-gutter-y-xl">
                 <ChoreCard
                   :chore="chore"
                   @chore-updated="refreshGroups"

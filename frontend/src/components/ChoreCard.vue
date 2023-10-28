@@ -73,9 +73,10 @@ function callMarkDone () {
 
 <style lang="scss">
 .chore {
-   height:200px;
-   width:200px;
+   height:170px;
+   width:170px;
    cursor:pointer;
+   border-radius: 10%;
 }
 
 </style>
