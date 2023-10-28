@@ -1,8 +1,19 @@
-version: '3.4'
+version: '3.9'
 
 services:
+  db:
+    image: postgres:14
+    volumes:
+      - ./shared/postgresql:/var/lib/postgresql/data:Z
+    env_file:
+      - ./backend/.env
+
   app:
     build:
       context: .
       dockerfile: .devops/django/Dockerfile
       target: python-run-stage
+    depends_on:
+      - db
+    env_file:
+      - ./backend/.env

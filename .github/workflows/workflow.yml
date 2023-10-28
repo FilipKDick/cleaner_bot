@@ -29,10 +29,10 @@ jobs:
         run: cp backend/.env.example backend/.env & cp frontend/.env.example frontend/.env
 
       - name: Build the Stack
-        run:  docker-compose -f docker-compose.yml -f docker-compose.ci.yml build app
+        run:  docker-compose -f docker-compose.ci.yml build app
 
       - name: Run tests
-        run:  docker-compose -f docker-compose.yml -f docker-compose.ci.yml run --rm app make test
+        run:  docker-compose -f docker-compose.ci.yml run --rm app make test
 
       - name: Tear down the Stack
-        run:  docker-compose -f docker-compose.yml -f docker-compose.ci.yml down
+        run:  docker-compose -f docker-compose.ci.yml down
