@@ -71,7 +71,7 @@
 import { ref, reactive } from 'vue'
 import { api } from 'boot/axios'
 import { useQuasar } from 'quasar'
-import { getAllGroups } from 'helpers/api'
+import { getAllGroups } from 'helpers/choreGroups'
 
 const $q = useQuasar()
 

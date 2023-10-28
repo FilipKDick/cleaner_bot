@@ -83,6 +83,10 @@ module.exports = configure(function (ctx) {
           ...cfg.resolve.alias,
           helpers: path.resolve(__dirname, './src/helpers'),
         }
+      },
+      env: {
+        API_URL: process.env.API_URL,
+        API_TOKEN: process.env.API_TOKEN,
       }
 
     },
