@@ -7,6 +7,7 @@
         :key="group.label"
         :class="`chore-${group.status}`"
         class="rounded-borders q-ma-sm"
+        v-model="group.expanded"
       >
         <template v-slot:header>
           <q-item-section class="row items-center">{{ group.label }}</q-item-section>
@@ -31,7 +32,7 @@
 <script setup>
 import { ref } from 'vue'
 import { useQuasar } from 'quasar'
-import { getAllGroups } from 'helpers/api'
+import { getAllGroups, statusOrderer } from 'helpers/choreGroups'
 import ChoreCard from 'components/ChoreCard'
 
 const $q = useQuasar()
@@ -44,6 +45,7 @@ function refreshGroups () {
     .then(
       (data) => {
         availableGroups.value = data.filter((group) => group.chores.length > 0)
+        availableGroups.value.sort(statusOrderer)
       }
     )
     .catch((error) => {
@@ -53,8 +55,5 @@ function refreshGroups () {
       )
     })
 }
-
-// TODO add default-opened if its overdue
-// TODO: ordering by status
 
 </script>
