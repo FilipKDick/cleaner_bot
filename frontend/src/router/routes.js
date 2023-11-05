@@ -6,7 +6,7 @@ const routes = [
     children: [
       { path: 'chore/', component: () => import('pages/ChoreAddPage.vue'), name: 'addChore' },
       { path: 'group/', component: () => import('pages/ChoreGroupAddPage.vue'), name: 'addGroup' },
-      { path: 'all/', component: () => import('pages/IndexPage.vue'), name: 'allChores' }
+      { path: '/', component: () => import('pages/IndexPage.vue'), name: 'allChores' }
     ]
   },
   {

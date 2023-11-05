@@ -10,19 +10,18 @@
         v-model="group.expanded"
       >
         <template v-slot:header>
-          <q-item-section class="row items-center">{{ group.label }}</q-item-section>
+          <q-item-section class="items-center">{{ group.label }}</q-item-section>
         </template>
         <q-card>
-            <div class="q-pa-md">
-              <div class="q-gutter-x-xl q-gutter-y-xl">
-                <ChoreCard
-                  :chore="chore"
-                  @chore-updated="refreshGroups"
-                  v-for="chore in group.chores"
-                  :key="chore.id"
-                />
-              </div>
-            </div>
+          <div class="q-pa-md q-ml-lg row justify-start">
+            <ChoreCard
+              :chore="chore"
+              @chore-updated="refreshGroups"
+              v-for="chore in group.chores"
+              :key="chore.id"
+              class="q-ma-md"
+            />
+          </div>
         </q-card>
       </q-expansion-item>
     </q-list>
