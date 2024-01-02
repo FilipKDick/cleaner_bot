@@ -21,6 +21,10 @@
               :key="chore.id"
               class="q-ma-md"
             />
+            <AddChoreCard
+              @chore-added="refreshGroups"
+              class="q-ma-md"
+            />
           </div>
         </q-card>
       </q-expansion-item>
@@ -33,6 +37,7 @@ import { ref } from 'vue'
 import { useQuasar } from 'quasar'
 import { getAllGroups, statusOrderer } from 'helpers/choreGroups'
 import ChoreCard from 'components/ChoreCard'
+import AddChoreCard from 'components/AddChoreCard'
 
 const $q = useQuasar()
 
