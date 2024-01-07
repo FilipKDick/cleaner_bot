@@ -1,6 +1,6 @@
 <template>
   <q-page class="q-pa-lg">
-    <q-list bordered class="rounded-borders">
+    <q-list class="rounded-borders">
       <q-expansion-item
         expand-separator
         v-for="group in availableGroups"
@@ -24,10 +24,12 @@
             <AddChoreCard
               @chore-added="refreshGroups"
               class="q-ma-md"
+              :choreGroupId="group.value"
             />
           </div>
         </q-card>
       </q-expansion-item>
+      <AddChoreGroup @group-added="refreshGroups" />
     </q-list>
   </q-page>
 </template>
@@ -38,6 +40,7 @@ import { useQuasar } from 'quasar'
 import { getAllGroups, statusOrderer } from 'helpers/choreGroups'
 import ChoreCard from 'components/ChoreCard'
 import AddChoreCard from 'components/AddChoreCard'
+import AddChoreGroup from 'components/AddChoreGroup'
 
 const $q = useQuasar()
 
@@ -48,7 +51,7 @@ function refreshGroups () {
   getAllGroups()
     .then(
       (data) => {
-        availableGroups.value = data.filter((group) => group.chores.length > 0)
+        availableGroups.value = data
         availableGroups.value.sort(statusOrderer)
       }
     )

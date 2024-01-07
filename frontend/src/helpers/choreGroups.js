@@ -7,7 +7,7 @@ export async function getAllGroups () {
     value: x.id,
     status: x.status,
     chores: x.chores,
-    expanded: x.status === 'overdue'
+    expanded: x.status === 'overdue' // TODO: due?
   }))
 }
 
