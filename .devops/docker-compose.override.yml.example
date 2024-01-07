@@ -9,3 +9,11 @@ services:
     ports:
       - "8001:8000"
     command: /start-local.sh
+
+  web:
+    user: "1000"
+    volumes:
+      - ./frontend:/app:z
+      - /app/node_modules
+    ports:
+      - "8080:8080"

@@ -1,6 +1,6 @@
 <template>
   <q-page class="q-pa-lg">
-    <q-list bordered class="rounded-borders">
+    <q-list class="rounded-borders">
       <q-expansion-item
         expand-separator
         v-for="group in availableGroups"
@@ -10,21 +10,26 @@
         v-model="group.expanded"
       >
         <template v-slot:header>
-          <q-item-section class="row items-center">{{ group.label }}</q-item-section>
+          <q-item-section class="items-center">{{ group.label }}</q-item-section>
         </template>
         <q-card>
-            <div class="q-pa-md">
-              <div class="q-gutter-x-md q-gutter-y-lg">
-                <ChoreCard
-                  :chore="chore"
-                  @chore-updated="refreshGroups"
-                  v-for="chore in group.chores"
-                  :key="chore.id"
-                />
-              </div>
-            </div>
+          <div class="q-pa-md q-ml-lg row justify-start">
+            <ChoreCard
+              :chore="chore"
+              @chore-updated="refreshGroups"
+              v-for="chore in group.chores"
+              :key="chore.id"
+              class="q-ma-md"
+            />
+            <AddChoreCard
+              @chore-added="refreshGroups"
+              class="q-ma-md"
+              :choreGroupId="group.value"
+            />
+          </div>
         </q-card>
       </q-expansion-item>
+      <AddChoreGroup @group-added="refreshGroups" />
     </q-list>
   </q-page>
 </template>
@@ -34,6 +39,8 @@ import { ref } from 'vue'
 import { useQuasar } from 'quasar'
 import { getAllGroups, statusOrderer } from 'helpers/choreGroups'
 import ChoreCard from 'components/ChoreCard'
+import AddChoreCard from 'components/AddChoreCard'
+import AddChoreGroup from 'components/AddChoreGroup'
 
 const $q = useQuasar()
 
@@ -44,7 +51,7 @@ function refreshGroups () {
   getAllGroups()
     .then(
       (data) => {
-        availableGroups.value = data.filter((group) => group.chores.length > 0)
+        availableGroups.value = data
         availableGroups.value.sort(statusOrderer)
       }
     )
