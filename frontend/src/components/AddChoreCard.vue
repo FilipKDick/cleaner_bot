@@ -53,7 +53,7 @@ import { useQuasar } from 'quasar'
 const emit = defineEmits(['choreAdded'])
 const props = defineProps({
   choreGroupId: {
-    type: Number,
+    type: String,
     required: true
   }
 })

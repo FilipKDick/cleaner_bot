@@ -1,5 +1,12 @@
 <template>
   <q-page class="q-pa-lg">
+    <div class="column items-end">
+      <q-toggle
+        v-model="hideSafe"
+        label="Hide completed groups"
+        @update:model-value="refreshGroups"
+      />
+    </div>
     <q-list class="rounded-borders">
       <q-expansion-item
         expand-separator
@@ -45,12 +52,16 @@ import AddChoreGroup from 'components/AddChoreGroup'
 const $q = useQuasar()
 
 const availableGroups = ref(null)
+const hideSafe = ref(true)
 refreshGroups()
 
 function refreshGroups () {
   getAllGroups()
     .then(
       (data) => {
+        if (hideSafe.value) {
+          data = data.filter((group) => group.status !== 'safe')
+        }
         availableGroups.value = data
         availableGroups.value.sort(statusOrderer)
       }
