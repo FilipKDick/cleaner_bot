@@ -1,8 +1,8 @@
 <template>
   <div>
-    <q-btn class="chore" @click="showAddDialog = true">
+    <q-btn class="chore chore-add" @click="showAddDialog = true">
       Add a new chore
-      <q-icon name="add_circle_outline" size="70px"/>
+      <q-icon name="add_circle_outline"/>
     </q-btn>
     <q-dialog v-model="showAddDialog" class="q-pa-lg" no-backdrop-dismiss>
       <div class="column q-pa-sm dark-bgr">
@@ -92,11 +92,7 @@ function submitForm () {
 </script>
 
 <style lang="scss" scoped>
-.chore {
-   height:170px;
-   width:170px;
-   cursor:pointer;
-   border-radius: 10%;
+.chore-add {
    background-color: beige;
 }
 

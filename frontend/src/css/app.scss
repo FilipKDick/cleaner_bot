@@ -29,3 +29,21 @@
 .chore-overdue:hover {
   background-color: #EF8275;
 }
+
+@media only screen and (min-width: 600px) {
+  .chore {
+    height: 170px;
+    width: 170px;
+    cursor: pointer;
+    border-radius: 10%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .chore {
+    height: 100px;
+    width: 100px;
+    cursor: pointer;
+    border-radius: 10%;
+  }
+}

@@ -20,13 +20,13 @@
           <q-item-section class="items-center">{{ group.label }}</q-item-section>
         </template>
         <q-card>
-          <div class="q-pa-md q-ml-lg row justify-start">
+          <div class="q-pa-sm row justify-start">
             <ChoreCard
               :chore="chore"
               @chore-updated="refreshGroups"
               v-for="chore in group.chores"
               :key="chore.id"
-              class="q-ma-md"
+              class="q-ma-sm"
             />
             <AddChoreCard
               @chore-added="refreshGroups"

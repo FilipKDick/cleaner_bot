@@ -5,7 +5,12 @@
     :class="`chore-${choreStatus}`"
   >
     {{ chore.name }} <br><br>
-    {{ choreComment() }}
+    <div v-if="bigScreen">
+      {{ choreComment() }}
+    </div>
+    <div v-else>
+      {{ chore.due_date }}
+    </div>
   </q-btn>
 </template>
 
@@ -69,14 +74,6 @@ function callMarkDone () {
       )
     })
 }
+
+const bigScreen = window.innerWidth > 600
 </script>
-
-<style lang="scss">
-.chore {
-   height:170px;
-   width:170px;
-   cursor:pointer;
-   border-radius: 10%;
-}
-
-</style>
