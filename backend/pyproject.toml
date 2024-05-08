@@ -25,7 +25,7 @@ psycopg2 = "~2.9.9"
 django-anymail = {extras = ["mailgun"], version = "~10.1"}
 
 [tool.poetry.group.dev.dependencies]
-Werkzeug = {extras = ["watchdog"], version = "~3.0.0"}
+Werkzeug = {extras = ["watchdog"], version = "~3.0.3"}
 watchdog = "~3.0.0"
 ipdb = "~0.13.13"
 psycopg = "~3.1.12"
